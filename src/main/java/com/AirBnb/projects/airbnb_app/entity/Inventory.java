@@ -12,12 +12,12 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @Entity
+
 @Table(
         uniqueConstraints = @UniqueConstraint(
         name = "unique_hotel_room_date",
-        columnNames = {"hotel_id", "room_id", "data"}
+        columnNames = {"hotel_id", "room_id", "date"}
 ))
-
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -25,14 +25,14 @@ public class Inventory {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "hotel_id" , nullable = false)
+    @JoinColumn(name = "hotel_id", nullable = false)
     private Hotel hotel;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(nullable = false)
+    @JoinColumn(name= "room_id", nullable = false)
     private Room room;
 
     @Column(nullable = false)
@@ -41,6 +41,9 @@ public class Inventory {
     @Column(nullable = false, columnDefinition = "INTEGER DEFAULT 0")
     private Integer bookedCount;
 
+    @Column(nullable = true, columnDefinition = "INTEGER DEFAULT 0")
+    private Integer reservedCount;
+
     @Column(nullable = false)
     private Integer totalCount;
 
@@ -48,7 +51,7 @@ public class Inventory {
     private BigDecimal surgeFactor;
 
     @Column(nullable = false, precision = 10, scale = 2)
-    private BigDecimal price; //basePrice * surgaFactor
+    private BigDecimal price; // basePrice * surgeFactor
 
     @Column(nullable = false)
     private String city;
@@ -57,8 +60,8 @@ public class Inventory {
     private Boolean closed;
 
     @CreationTimestamp
-    private LocalDateTime creatework;
+    private LocalDateTime createdAt;
 
     @UpdateTimestamp
-    private  LocalDateTime updatedAt;
+    private LocalDateTime updatedAt;
 }

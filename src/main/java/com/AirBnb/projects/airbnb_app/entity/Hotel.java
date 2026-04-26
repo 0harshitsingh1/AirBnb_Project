@@ -1,5 +1,6 @@
 package com.AirBnb.projects.airbnb_app.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -27,10 +28,10 @@ public class Hotel {
     private  String[] photos;
 
     @Column(columnDefinition = "TEXT[]")
-    private  String[] amenties;
+    private  String[] amenities;
 
     @CreationTimestamp
-    private LocalDateTime creatework;
+    private LocalDateTime createAt;
 
     @UpdateTimestamp
     private  LocalDateTime updatedAt;
@@ -39,15 +40,16 @@ public class Hotel {
     private HotelContactInfo contactInfo;
 
     @Column(nullable = false)
-    private Boolean active;
+    private Boolean active = false;
 
 //    @OneToMany(mappedBy = "hotel", fetch = FetchType.LAZY)
 //    private List<Room> room;
 
-    @ManyToOne
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private  User owner;
 
     @OneToMany(mappedBy = "hotel")
+    @JsonIgnore
     private List<Room> rooms;
 
 }

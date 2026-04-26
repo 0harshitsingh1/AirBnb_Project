@@ -33,4 +33,6 @@ public class Payment {
     @UpdateTimestamp
     private  LocalDateTime updatedAt;
 
+    @OneToOne(fetch = FetchType.LAZY)
+    private Booking booking;
 }

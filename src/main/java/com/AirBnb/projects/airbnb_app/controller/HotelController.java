@@ -23,7 +23,7 @@ public class HotelController {
         return new ResponseEntity<>(hotel, HttpStatus.CREATED);
     }
 
-    @GetMapping
+    @GetMapping("/{hotelId}")
     public  ResponseEntity<HotelDTO> getHotelId(@PathVariable Long hotelId){
         HotelDTO hotelDTO = hotelService.getHotelById(hotelId);
         return ResponseEntity.ok(hotelDTO);
@@ -41,7 +41,7 @@ public class HotelController {
         return ResponseEntity.noContent().build();
     }
 
-    @PatchMapping("/{hotelId}")
+    @PatchMapping("/{hotelId}/activate")
     public  ResponseEntity<HotelDTO> activeHotelId(@PathVariable Long hotelId){
         hotelService.activateHotel(hotelId);
         return ResponseEntity.noContent().build();
