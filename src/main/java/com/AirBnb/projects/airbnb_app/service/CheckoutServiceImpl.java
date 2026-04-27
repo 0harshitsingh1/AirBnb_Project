@@ -46,8 +46,8 @@ public class CheckoutServiceImpl implements CheckoutService{
                                     .setPriceData(
                                             SessionCreateParams.LineItem.PriceData.builder()
                                                     .setCurrency("inr")
-                                                    .setUnitAmount(booking.getAmount().multiply(BigDecimal.valueOf(100)).longValue())
-                                                    .setProductData(
+                                                    .setUnitAmount(booking.getAmount().multiply(BigDecimal.valueOf(100)).longValue()) // ✅ ONLY this.longValue())
+                                            .setProductData(
                                                             SessionCreateParams.LineItem.PriceData.ProductData.builder()
                                                                     .setName(booking.getHotel().getName() + " ; "+ booking.getRoom().getType())
                                                                     .setDescription("Booking ID: " + booking.getId())
@@ -61,7 +61,7 @@ public class CheckoutServiceImpl implements CheckoutService{
 
             Session session = Session.create(sessionParams);
 
-            booking.setPayementSessionId(session.getId());
+            booking.setPaymentSessionId(session.getId());
             bookingRepository.save(booking);
 
             log.info("Session created successfully for booking with ID: {}", booking.getId());

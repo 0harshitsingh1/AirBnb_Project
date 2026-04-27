@@ -69,9 +69,9 @@ public class InventoryServiceImpl implements InventoryService{
 
 //        Business logic -- 90 days
         Page<HotelPriceDTO> hotelPage =
-                inventoryRepository.findHotelsWithAvailableInventory(hotelSearchRequest.getCity(),
-                hotelSearchRequest.getStartDate(), hotelSearchRequest.getEndDate(), hotelSearchRequest.getRoomCount(),
-                dateCount, pageable);
+                hotelMinPriceRepository.findHotelsWithAvailableInventory(hotelSearchRequest.getCity(),
+                        hotelSearchRequest.getStartDate(), hotelSearchRequest.getEndDate(), hotelSearchRequest.getRoomCount(),
+                        dateCount, pageable);
 
         return hotelPage;
     }

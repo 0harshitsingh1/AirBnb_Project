@@ -17,20 +17,32 @@ import java.util.Map;
 public class HotelBookingController {
 
     private final BookingService bookingService;
+
     @PostMapping("/init")
     public ResponseEntity<BookingDTO> initialiseBooking(@RequestBody BookingRequest bookingRequest) {
-        return  ResponseEntity.ok(bookingService.initialiseBooking(bookingRequest));
+        return ResponseEntity.ok(bookingService.initialiseBooking(bookingRequest));
     }
 
     @PostMapping("/{bookingId}/addGuests")
-    public ResponseEntity<BookingDTO> addGuest(@PathVariable Long bookingId,
-                                               @RequestBody List<GuestDTO> guestDtoList) {
+    public ResponseEntity<BookingDTO> addGuests(@PathVariable Long bookingId,
+                                                @RequestBody List<GuestDTO> guestDtoList) {
         return ResponseEntity.ok(bookingService.addGuests(bookingId, guestDtoList));
     }
 
-    @PostMapping("/booking{id}/payments")
+    @PostMapping("/{bookingId}/payments")
     public ResponseEntity<Map<String, String>> initialPayment(@PathVariable Long bookingId) {
         String sessionUrl = bookingService.initialPayment(bookingId);
         return ResponseEntity.ok(Map.of("sessionUrl", sessionUrl));
+    }
+
+    @PostMapping("/{bookingId}/cancel")
+    public ResponseEntity<Void> cancelBooking(@PathVariable Long bookingId) {
+        bookingService.cancelBooking(bookingId);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PostMapping("/{bookingId}/status")
+    public ResponseEntity<Map<String, String>> getBookingStatus(@PathVariable Long bookingId) {
+        return ResponseEntity.ok(Map.of("status", bookingService.getBookingStatus(bookingId)));
     }
 }

@@ -67,6 +67,6 @@ public class Booking {
     private BigDecimal amount;
 
     @Column(unique = true)
-    private String payementSessionId;
+    private String paymentSessionId;
 
 }
