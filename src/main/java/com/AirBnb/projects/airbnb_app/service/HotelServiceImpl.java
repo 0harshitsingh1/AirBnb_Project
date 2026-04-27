@@ -10,19 +10,25 @@ import com.AirBnb.projects.airbnb_app.exception.ResourceNotFoundException;
 import com.AirBnb.projects.airbnb_app.exception.UnAuthorisedException;
 import com.AirBnb.projects.airbnb_app.repository.HotelRepository;
 import com.AirBnb.projects.airbnb_app.repository.RoomRepository;
+import com.AirBnb.projects.airbnb_app.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.jspecify.annotations.Nullable;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
+
+import static com.AirBnb.projects.airbnb_app.util.AppUnits.getCurrentUser;
 
 @Service
 @Slf4j
 @RequiredArgsConstructor
 public class HotelServiceImpl implements HotelService {
+    private final UserRepository userRepository;
     private final RoomRepository roomRepository;
 
     private  final HotelRepository hotelRepository;
@@ -132,5 +138,16 @@ public class HotelServiceImpl implements HotelService {
                 .toList();
 
         return  new HotelInfoDTO(modelMapper.map(hotel, HotelDTO.class), rooms);
+    }
+
+    @Override
+    public @Nullable List<HotelDTO> getAllHotels() {
+        User user = getCurrentUser();
+        log.info("Getting all hotels for the admin user with ID: {}", user.getId());
+        List<Hotel> hotels = hotelRepository.findByOwner(user);
+        return hotels
+                .stream()
+                .map((element) -> modelMapper.map(element, HotelDTO.class))
+                .collect(Collectors.toList());
     }
 }
