@@ -1,5 +1,6 @@
 package com.AirBnb.projects.airbnb_app.service;
 
+import com.AirBnb.projects.airbnb_app.dto.BookingDTO;
 import com.AirBnb.projects.airbnb_app.dto.HotelDTO;
 import com.AirBnb.projects.airbnb_app.dto.HotelInfoDTO;
 import org.jspecify.annotations.Nullable;

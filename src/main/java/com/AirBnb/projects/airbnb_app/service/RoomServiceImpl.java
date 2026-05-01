@@ -9,6 +9,7 @@ import com.AirBnb.projects.airbnb_app.exception.UnAuthorisedException;
 import com.AirBnb.projects.airbnb_app.repository.HotelRepository;
 import com.AirBnb.projects.airbnb_app.repository.InventoryRepository;
 import com.AirBnb.projects.airbnb_app.repository.RoomRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
@@ -17,6 +18,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static com.AirBnb.projects.airbnb_app.util.AppUnits.getCurrentUser;
 
 @Service
 @RequiredArgsConstructor
@@ -93,5 +96,29 @@ public class RoomServiceImpl implements RoomService{
 
         inventoryService.deleteFutureInventories(room);
         roomRepository.deleteById(roomId);
+    }
+
+    @Override
+    @Transactional
+    public RoomDTO updateRoomById(Long hotelId, Long roomId, RoomDTO roomDTO) {
+
+        log.info("Updating the room with id: {}", roomId);
+        Hotel hotel = hotelRepository
+                .findById(hotelId)
+                .orElseThrow(() -> new ResourceNotFoundException("Hotel not found with ID: "+ hotelId));
+
+        User user = getCurrentUser();
+        if(!user.equals(hotel.getOwner())) {
+            throw new UnAuthorisedException("This user does not own this hotel with id: "+hotelId);
+        }
+
+        Room room = roomRepository.findById(roomId).orElseThrow(() -> new ResourceNotFoundException("Room not found with ID: "+roomId));
+        modelMapper.map(roomDTO, room);
+        room.setId(roomId);
+
+//        TODO: If price or inventory is updated, then update the inventory for this room
+
+        room = roomRepository.save(room);
+        return modelMapper.map(room, RoomDTO.class);
     }
 }
