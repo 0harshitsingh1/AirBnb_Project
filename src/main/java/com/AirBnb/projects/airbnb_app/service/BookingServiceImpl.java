@@ -243,16 +243,18 @@ public class BookingServiceImpl implements BookingService{
 
     @Override
     public List<BookingDTO> getAllBookingsByHotelId(Long hotelId) {
-        Hotel hotel = hotelRepository.findById(hotelId).orElseThrow(() -> new ResourceNotFoundException("Hotel not found with ID: "+ hotelId));
+        Hotel hotel = hotelRepository.findById(hotelId).orElseThrow(() -> new ResourceNotFoundException("Hotel not " +
+                "found with ID: "+hotelId));
         User user = getCurrentUser();
 
-        log.info("Getting all booking for the hotel with ID: {}",hotelId);
+        log.info("Getting all booking for the hotel with ID: {}", hotelId);
 
-        if(user.equals(hotel.getOwner())) throw new AccessDeniedException("You are not the owner of hotel with Id: "+hotelId);
+        if(!user.equals(hotel.getOwner())) throw new AccessDeniedException("You are not the owner of hotel with id: "+hotelId);
 
         List<Booking> bookings = bookingRepository.findByHotel(hotel);
 
-        return bookings.stream().map((element) -> modelMapper.map(element, BookingDTO.class))
+        return bookings.stream()
+                .map((element) -> modelMapper.map(element, BookingDTO.class))
                 .collect(Collectors.toList());
     }
 
@@ -286,6 +288,17 @@ public class BookingServiceImpl implements BookingService{
                         .divide(BigDecimal.valueOf(totalConfirmBookings), RoundingMode.HALF_UP);
         return new HotelReportDTO(totalConfirmBookings, totalRevenueOfConfirmedBookings, avgRevenue);
 
+    }
+
+    @Override
+    public List<BookingDTO> getMyBookings() {
+        User user = getCurrentUser();
+
+        return bookingRepository.findByUser(user)
+                .stream().
+                map((element) -> modelMapper
+                        .map(element, BookingDTO.class))
+                        .collect(Collectors.toList());
     }
 
     public boolean hasBookingExpired(Booking booking){

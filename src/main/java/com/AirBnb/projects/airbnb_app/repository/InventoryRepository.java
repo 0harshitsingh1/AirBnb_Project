@@ -119,33 +119,33 @@ public interface InventoryRepository extends JpaRepository<Inventory , Long> {
 
     List<Inventory> findByHotelAndDateBetween(Hotel hotel, LocalDate startDate, LocalDate endDate);
 
-//    List<Inventory> findByRoomOrderByDate(Room room);
+    List<Inventory> findByRoomOrderByDate(Room room);
 //
-//    @Query("""
-//                SELECT i
-//                FROM Inventory i
-//                WHERE i.room.id = :roomId
-//                  AND i.date BETWEEN :startDate AND :endDate
-//            """)
-//    @Lock(LockModeType.PESSIMISTIC_WRITE)
-//    List<Inventory> getInventoryAndLockBeforeUpdate(@Param("roomId") Long roomId,
-//                                                    @Param("startDate") LocalDate startDate,
-//                                                    @Param("endDate") LocalDate endDate);
-//
-//    @Modifying
-//    @Query("""
-//                UPDATE Inventory i
-//                SET i.surgeFactor = :surgeFactor,
-//                    i.closed = :closed
-//                WHERE i.room.id = :roomId
-//                  AND i.date BETWEEN :startDate AND :endDate
-//            """)
-//    void updateInventory(@Param("roomId") Long roomId,
-//                         @Param("startDate") LocalDate startDate,
-//                         @Param("endDate") LocalDate endDate,
-//                         @Param("closed") boolean closed,
-//                         @Param("surgeFactor") BigDecimal surgeFactor);
-//
+    @Query("""
+                SELECT i
+                FROM Inventory i
+                WHERE i.room.id = :roomId
+                  AND i.date BETWEEN :startDate AND :endDate
+            """)
+    @Lock(LockModeType.PESSIMISTIC_WRITE)
+    List<Inventory> getInventoryAndLockBeforeUpdate(@Param("roomId") Long roomId,
+                                                    @Param("startDate") LocalDate startDate,
+                                                    @Param("endDate") LocalDate endDate);
+
+    @Modifying
+    @Query("""
+                UPDATE Inventory i
+                SET i.surgeFactor = :surgeFactor,
+                    i.closed = :closed
+                WHERE i.room.id = :roomId
+                  AND i.date BETWEEN :startDate AND :endDate
+            """)
+    void updateInventory(@Param("roomId") Long roomId,
+                         @Param("startDate") LocalDate startDate,
+                         @Param("endDate") LocalDate endDate,
+                         @Param("closed") boolean closed,
+                         @Param("surgeFactor") BigDecimal surgeFactor);
+
 //    @Query("""
 //       SELECT new com.codingshuttle.projects.airBnbApp.dto.RoomPriceDto(
 //            i.room,
@@ -161,7 +161,7 @@ public interface InventoryRepository extends JpaRepository<Inventory , Long> {
 //             AND i.closed = false
 //       GROUP BY i.room
 //       """)
-//    List<RoomPriceDto> findRoomAveragePrice(
+//    List<RoomPriceDTO> findRoomAveragePrice(
 //            @Param("hotelId") Long hotelId,
 //            @Param("startDate") LocalDate startDate,
 //            @Param("endDate") LocalDate endDate,
