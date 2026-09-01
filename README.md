@@ -103,9 +103,8 @@ Before you begin, ensure you have the following installed:
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/0harshitsingh1/AirBnb_Project.git
-cd AirBnb_Project
-```
+git stayease-vacation-rental-backenditsingh1/stayease-vacation-rental-backend.git](https://github.com/0harshitsingh1/stayease-vacation-rental-backend.git)
+cd stayease-vacation-rental-backend
 
 ### 2. Configure Database
 
