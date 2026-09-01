@@ -1,27 +1,27 @@
-# 🏠 AirBnb Clone Project
+# 🏠 StayEase
 
 A full-stack Spring Boot application that replicates the core functionality of Airbnb, a peer-to-peer online marketplace for booking accommodations.
 
 ## 📋 Table of Contents
 
-- [Overview](#overview)
-- [Features](#features)
-- [Tech Stack](#tech-stack)
-- [Prerequisites](#prerequisites)
-- [Installation](#installation)
-- [Configuration](#configuration)
-- [Running the Application](#running-the-application)
-- [Project Structure](#project-structure)
-- [API Documentation](#api-documentation)
-- [Security](#security)
-- [Database](#database)
-- [Testing](#testing)
-- [Contributing](#contributing)
-- [License](#license)
+- [Overview](#-overview)
+- [Features](#-features)
+- [Tech Stack](#-tech-stack)
+- [Prerequisites](#-prerequisites)
+- [Installation](#-installation)
+- [Configuration](#-configuration)
+- [Running the Application](#-running-the-application)
+- [Project Structure](#-project-structure)
+- [API Documentation](#-api-documentation)
+- [Security](#-security)
+- [Database](#-database)
+- [Testing](#-testing)
+- [Contributing](#-contributing)
+- [License](#-license)
 
 ## 🎯 Overview
 
-This project is an Airbnb clone built with modern Java technologies. It demonstrates a comprehensive understanding of enterprise-level application development, including REST API design, database management, user authentication, and payment processing.
+This project is StayEase, built with modern Java technologies. It demonstrates a comprehensive understanding of enterprise-level application development, including REST API design, database management, user authentication, and payment processing.
 
 The application allows users to:
 - Register and manage their accounts
@@ -90,7 +90,6 @@ The application allows users to:
 ## 📦 Prerequisites
 
 Before you begin, ensure you have the following installed:
-
 - **Java 21** or higher
 - **Maven 3.6** or higher
 - **PostgreSQL 12** or higher
